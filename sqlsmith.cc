@@ -34,6 +34,8 @@ using boost::regex_match;
 #include "monetdb.hh"
 #endif
 
+#include "mysql.hh"
+
 #include "postgres.hh"
 
 using namespace std;
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
   cerr << PACKAGE_NAME " " GITREV << endl;
 
   map<string,string> options;
-  regex optregex("--(help|log-to|verbose|target|sqlite|monetdb|version|dump-all-graphs|dump-all-queries|seed|dry-run|max-queries|rng-state|exclude-catalog)(?:=((?:.|\n)*))?");
+  regex optregex("--(help|log-to|verbose|target|sqlite|monetdb|mysql|version|dump-all-graphs|dump-all-queries|seed|dry-run|max-queries|rng-state|exclude-catalog)(?:=((?:.|\n)*))?");
   
   for(char **opt = argv+1 ;opt < argv+argc; opt++) {
     smatch match;
@@ -84,6 +86,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_MONETDB
       "    --monetdb=connstr    MonetDB database to send queries to" <<endl <<
 #endif
+      "    --mysql=URI    		MySQL database to send queries to" <<endl <<
       "    --log-to=connstr     log errors to postgres database" << endl <<
       "    --seed=int           seed RNG with specified int instead of PID" << endl <<
       "    --dump-all-queries   print queries as they are generated" << endl <<
@@ -118,6 +121,9 @@ int main(int argc, char *argv[])
 	cerr << "Sorry, " PACKAGE_NAME " was compiled without MonetDB support." << endl;
 	return 1;
 #endif
+			}
+	  	else if(options.count("mysql")) {
+	schema = make_shared<schema_mysql>(options["mysql"], options.count("exclude-catalog"));
       }
       else
 	schema = make_shared<schema_pqxx>(options["target"], options.count("exclude-catalog"));
@@ -186,6 +192,9 @@ int main(int argc, char *argv[])
 	cerr << "Sorry, " PACKAGE_NAME " was compiled without MonetDB support." << endl;
 	return 1;
 #endif
+			}
+      else if(options.count("mysql")) {
+	dut = make_shared<dut_mysql>(options["mysql"]);
       }
       else
 	dut = make_shared<dut_libpq>(options["target"]);

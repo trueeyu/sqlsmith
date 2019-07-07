@@ -8,7 +8,7 @@ SQLsmith is a random SQL query generator.  Its paragon is [[https://embed.cs.uta
 which proved valuable for quality assurance in C compilers.
 
 It currently supports generating queries for PostgreSQL, SQLite 3 and
-MonetDB.  To add support for another RDBMS, you need to implement two
+MonetDB, MySQL.  To add support for another RDBMS, you need to implement two
 classes providing schema information about and connectivity to the
 device under test.
 
@@ -31,10 +31,11 @@ optional:
 - boost::regex in case your std::regex is broken
 - SQLite3
 - monetdb_mapi
+- MySQL
 
 ** Building on Debian Jessie
 
-: apt-get install build-essential autoconf autoconf-archive libpqxx-dev libboost-regex-dev libsqlite3-dev
+: apt-get install build-essential autoconf autoconf-archive libpqxx-dev libboost-regex-dev libsqlite3-dev libmysqlclient-dev
 : cd sqlsmith
 : autoreconf -i # Avoid when building from a release tarball
 : ./configure
@@ -44,7 +45,7 @@ optional:
 
 In order to build on Mac OSX, assuming you use Homebrew, run the following
 
-: brew install libpqxx automake libtool autoconf autoconf-archive pkg-config
+: brew install libpqxx automake libtool autoconf autoconf-archive pkg-config mysql-client
 : cd sqlsmith
 : autoreconf -i # Avoid when building from a release tarball
 : ./configure
@@ -67,12 +68,15 @@ Example invocations:
 : sqlsmith --verbose --sqlite="file:$HOME/.mozilla/firefox/places.sqlite?mode=ro"
 : # testing MonetDB
 : sqlsmith --verbose --monetdb="mapi:monetdb://localhost:50000/smith"
+: # testing MySQL
+: sqlsmith --verbose --mysql="mysql://root@127.0.0.1:3306/test"
 
 The following options are currently supported:
 
 | =--target=connstr=   | target postgres database (default: libpq defaults)       |
 | =--sqlite=URI=       | target SQLite3 database                                  |
 | =--monetdb=URI=      | target MonetDB database                                  |
+| =--mysql=URI=        | target MySQL database                                    |
 | =--log-to=connstr=   | postgres db for logging errors into (default: don't log) |
 | =--verbose=          | emit progress output                                     |
 | =--version=          | show version information                                 |
