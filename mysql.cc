@@ -284,7 +284,6 @@ void dut_mysql::test(const std::string &stmt) {
       throw dut::syntax(err);  		
   	} 
   	else {
-  		cout << "hello" << err_num << endl << err << endl;
 	    throw std::runtime_error(err);
   	}
   }
