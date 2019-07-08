@@ -37,8 +37,8 @@ optional:
 
 : apt-get install build-essential autoconf autoconf-archive libpqxx-dev libboost-regex-dev libsqlite3-dev libmysqlclient-dev
 : cd sqlsmith
-: autoreconf -i # Avoid when building from a release tarball
-: ./configure
+: mkdir build && cd build
+: cmake ..
 : make
 
 ** Building on OSX
@@ -47,8 +47,8 @@ In order to build on Mac OSX, assuming you use Homebrew, run the following
 
 : brew install libpqxx automake libtool autoconf autoconf-archive pkg-config mysql-client
 : cd sqlsmith
-: autoreconf -i # Avoid when building from a release tarball
-: ./configure
+: mkdir build && cd build
+: cmake ..
 : make
 
 ** Usage
