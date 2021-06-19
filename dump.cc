@@ -16,7 +16,7 @@ std::string graphml_dumper::id(struct prod *p)
 graphml_dumper::graphml_dumper(ostream &out)
   : o(out)
 {
-  o << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl <<
+  o << R"(<?xml version="1.0" encoding="UTF-8"?>)" << endl <<
     "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" " <<
     "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " <<
     "xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns " <<
@@ -29,7 +29,7 @@ graphml_dumper::graphml_dumper(ostream &out)
   o << "<key id=\"scope\" for=\"node\" "
             "attr.name=\"scope\" attr.type=\"string\" />" << endl;
 
-  o << "<graph id=\"ast\" edgedefault=\"directed\">" << endl;
+  o << R"(<graph id="ast" edgedefault="directed">)" << endl;
   
 }
 
@@ -53,7 +53,7 @@ graphml_dumper::~graphml_dumper()
 
 void ast_logger::generated(prod &query)
 {
-  string filename("");
+  string filename;
   filename += "sqlsmith-";
   filename += to_string(queries);
   filename += ".xml";

@@ -18,7 +18,7 @@ extern "C"  {
 #include "log.hh"
 
 struct mysql_connection {
-  MYSQL mysql;
+  MYSQL mysql{};
   mysql_connection(std::string &conninfo);
   ~mysql_connection();
 
@@ -33,11 +33,6 @@ struct mysql_connection {
 
 struct schema_mysql : schema, mysql_connection {
   schema_mysql(std::string &conninfo, bool no_catalog);
-  virtual std::string quote_name(const std::string &id) {
-    std::stringstream ss;
-    ss << "`" << id << "`";
-    return ss.str();
-  }
 };
 
 struct dut_mysql : dut_base, mysql_connection {

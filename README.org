@@ -37,6 +37,8 @@ optional:
 
 : apt-get install build-essential autoconf autoconf-archive libpqxx-dev libboost-regex-dev libsqlite3-dev libmysqlclient-dev
 : cd sqlsmith
+: autoreconf --install --force
+: cp config.h.in cmake/
 : mkdir build && cd build
 : cmake ..
 : make
