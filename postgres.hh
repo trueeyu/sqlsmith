@@ -34,7 +34,6 @@ struct pg_type : sqltype {
       typelem_(typelem), typarray_(typarray), typtype_(typtype) { }
 
   virtual bool consistent(struct sqltype *rvalue);
-  bool consistent_(sqltype *rvalue);
 };
 
 
