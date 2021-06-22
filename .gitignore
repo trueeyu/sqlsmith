@@ -30,3 +30,5 @@ stamp-h1
 sqlsmith-*.tar.gz
 doxygen_sqlite3.db
 build
+.idea
+cmake-build-debug

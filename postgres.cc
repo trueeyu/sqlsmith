@@ -64,7 +64,7 @@ dut_pqxx::dut_pqxx(std::string conninfo)
 {
      c.set_variable("statement_timeout", "'1s'");
      c.set_variable("client_min_messages", "'ERROR'");
-     c.set_variable("application_name", "'" PACKAGE "::dut'");
+     c.set_variable("application_name", "'" "::dut'");
 }
 
 void dut_pqxx::test(const std::string &stmt)
@@ -94,7 +94,7 @@ void dut_pqxx::test(const std::string &stmt)
 
 schema_pqxx::schema_pqxx(std::string &conninfo, bool no_catalog) : c(conninfo)
 {
-  c.set_variable("application_name", "'" PACKAGE "::schema'");
+  c.set_variable("application_name", "'" "::schema'");
 
   pqxx::work w(c);
   pqxx::result r = w.exec("select version()");
@@ -307,7 +307,7 @@ void dut_libpq::connect(std::string &conninfo)
 
     command("set statement_timeout to '1s'");
     command("set client_min_messages to 'ERROR';");
-    command("set application_name to '" PACKAGE "::dut';");
+    command("set application_name to '" "::dut';");
 
     PQsetNoticeReceiver(conn, dut_libpq_notice_rx, (void *) 0);
 }

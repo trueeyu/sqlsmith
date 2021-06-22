@@ -61,7 +61,7 @@ extern "C" void cerr_log_handler(int)
 
 int main(int argc, char *argv[])
 {
-  cerr << PACKAGE_NAME " " GITREV << endl;
+  cerr << " " GITREV << endl;
 
   map<string,string> options;
   regex optregex("--(help|log-to|verbose|target|sqlite|monetdb|mysql|version|dump-all-graphs|dump-all-queries|seed|dry-run|max-queries|rng-state|exclude-catalog)(?:=((?:.|\n)*))?");
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_LIBSQLITE3
 	schema = make_shared<schema_sqlite>(options["sqlite"], options.count("exclude-catalog"));
 #else
-	cerr << "Sorry, " PACKAGE_NAME " was compiled without SQLite support." << endl;
+	cerr << "Sorry, " " was compiled without SQLite support." << endl;
 	return 1;
 #endif
       }
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_MONETDB
 	schema = make_shared<schema_monetdb>(options["monetdb"]);
 #else
-	cerr << "Sorry, " PACKAGE_NAME " was compiled without MonetDB support." << endl;
+	cerr << "Sorry, " " was compiled without MonetDB support." << endl;
 	return 1;
 #endif
 			}
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_LIBSQLITE3
 	dut = make_shared<dut_sqlite>(options["sqlite"]);
 #else
-	cerr << "Sorry, " PACKAGE_NAME " was compiled without SQLite support." << endl;
+	cerr << "Sorry, " " was compiled without SQLite support." << endl;
 	return 1;
 #endif
       }
@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_MONETDB	   
 	dut = make_shared<dut_monetdb>(options["monetdb"]);
 #else
-	cerr << "Sorry, " PACKAGE_NAME " was compiled without MonetDB support." << endl;
+	cerr << "Sorry, " " was compiled without MonetDB support." << endl;
 	return 1;
 #endif
 			}
