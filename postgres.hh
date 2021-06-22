@@ -49,12 +49,6 @@ struct schema_pqxx : public schema {
   schema_pqxx(std::string &conninfo, bool no_catalog);
 };
 
-struct dut_pqxx : dut_base {
-  pqxx::connection c;
-  virtual void test(const std::string &stmt);
-  dut_pqxx(std::string conninfo);
-};
-
 struct dut_libpq : dut_base {
      PGconn *conn = 0;
      std::string conninfo_;

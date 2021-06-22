@@ -59,39 +59,6 @@ bool pg_type::consistent(sqltype *rvalue)
   }
 }
 
-dut_pqxx::dut_pqxx(std::string conninfo)
-  : c(conninfo)
-{
-     c.set_variable("statement_timeout", "'1s'");
-     c.set_variable("client_min_messages", "'ERROR'");
-     c.set_variable("application_name", "'" "::dut'");
-}
-
-void dut_pqxx::test(const std::string &stmt)
-{
-  try {
-    if(!c.is_open())
-       c.activate();
-
-    pqxx::work w(c);
-    w.exec(stmt.c_str());
-    w.abort();
-  } catch (const pqxx::failure &e) {
-    if ((dynamic_cast<const pqxx::broken_connection *>(&e))) {
-      /* re-throw to outer loop to recover session. */
-      throw dut::broken(e.what());
-    }
-
-    if (regex_match(e.what(), e_timeout))
-      throw dut::timeout(e.what());
-    else if (regex_match(e.what(), e_syntax))
-      throw dut::syntax(e.what());
-    else
-      throw dut::failure(e.what());
-  }
-}
-
-
 schema_pqxx::schema_pqxx(std::string &conninfo, bool no_catalog) : c(conninfo)
 {
   c.set_variable("application_name", "'" "::schema'");
