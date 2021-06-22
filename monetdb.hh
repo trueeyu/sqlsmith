@@ -21,9 +21,6 @@ struct monetdb_connection {
 
 struct schema_monetdb : schema, monetdb_connection {
 	schema_monetdb(std::string &conninfo);
-	virtual std::string quote_name(const std::string &id) {
-		return id;
-	}
 };
 
 struct dut_monetdb : dut_base, monetdb_connection {
