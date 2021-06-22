@@ -62,14 +62,7 @@ struct schema {
   virtual void register_aggregate(routine& r) {
     aggregates.push_back(r);
   }
-  virtual op_iterator find_operator(sqltype *left, sqltype *right, sqltype *res) {
-    typekey t(left, right, res);
-    auto cons = index.equal_range(t);
-    if (cons.first == cons.second)
-      return index.end();
-    else
-      return random_pick<>(cons.first, cons.second);
-  }
+
   schema() { }
   void generate_indexes();
 };
