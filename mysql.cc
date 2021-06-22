@@ -3,6 +3,11 @@
 
 using namespace std;
 
+bool mysql_type::consistent(struct sqltype* rvalue) {
+    auto* t = dynamic_cast<mysql_type*>(rvalue);
+    return column_type_ == t->column_type_;
+}
+
 void mysql_connection::parse_connection_string(std::string &conninfo) {
     // URI is mysql://root[:password]@host:port/database
     size_t pos = conninfo.find("mysql://");

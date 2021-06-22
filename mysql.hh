@@ -5,7 +5,7 @@
 #ifndef MYSQL_HH
 #define MYSQL_HH
 
-extern "C"  {
+extern "C" {
 #include <mysql/mysql.h>
 }
 
@@ -17,27 +17,39 @@ extern "C"  {
 #include "dut.hh"
 #include "log.hh"
 
+struct mysql_type : sqltype {
+    std::string column_type_;
+
+    mysql_type(std::string name, std::string column_type) : sqltype(name), column_type_(column_type) {
+    }
+
+    virtual bool consistent(struct sqltype* rvalue);
+};
+
 struct mysql_connection {
-  MYSQL mysql;
-  mysql_connection(std::string &conninfo);
-  ~mysql_connection();
+    MYSQL mysql;
 
-  void parse_connection_string(std::string &conninfo);
+    mysql_connection(std::string &conninfo);
 
-  std::string host = "127.0.0.1";
-  int port = 3306;
-  std::string db = "test";
-  std::string user = "root";
-  std::string password = "";
+    ~mysql_connection();
+
+    void parse_connection_string(std::string &conninfo);
+
+    std::string host = "127.0.0.1";
+    int port = 3306;
+    std::string db = "test";
+    std::string user = "root";
+    std::string password = "";
 };
 
 struct schema_mysql : schema, mysql_connection {
-  schema_mysql(std::string &conninfo, bool no_catalog);
+    schema_mysql(std::string &conninfo, bool no_catalog);
 };
 
 struct dut_mysql : dut_base, mysql_connection {
-  virtual void test(const std::string &stmt);
-  dut_mysql(std::string &conninfo);
+    virtual void test(const std::string &stmt);
+
+    dut_mysql(std::string &conninfo);
 };
 
 #endif
