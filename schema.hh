@@ -46,10 +46,6 @@ struct schema {
   
   virtual std::string quote_name(const std::string &id) = 0;
   
-  void summary() {
-    std::cout << "Found " << tables.size() <<
-      " user table(s) in information schema." << std::endl;
-  }
   void fill_scope(struct scope &s) {
     for (auto &t : tables)
       s.tables.push_back(&t);
